@@ -1,0 +1,43 @@
+from Tkinter import *
+import tkFont
+from gpiozero import LED
+import RPi.GPIO
+RPi.GPIO.setmode(RPi.GPIO.BCM)
+green = LED(14)
+red = LED(15)
+yellow = LED(18)
+win = Tk()
+win.title("LED Toggler")
+myFont = tkFont.Font(family = 'Helvetica', size = '12', weight = "bold")
+def greenToggle():
+    if green.is_lit:
+       green.off()
+       greenButton["text"] = "Green Turn LED on"
+    else:
+       green.on()
+       greenButton["Text"] = "Green Turn LED off"
+def redToggle():
+    if red.is_lit:
+       red.off()
+       redButton["text"] = "Red Turn LED on"
+    else:
+       red.on()
+       redButton["Text"] = "Red Turn LED off"
+def yellowToggle():
+    if yellow.is_lit:
+       yellow.off()
+       yellowButton["text"] = "Yellow Turn LED on"
+    else:
+       yellow.on()
+       yellowButton["Text"] = "Yellow Turn LED off"
+def close():
+        RPi.GPIO.cleanup()
+        win.destroy()
+greenButton = Button(win, text = 'Green LED Turn On', font = myFont, command = greenToggle,bg = 'bisque2', height = 1, width = 22)
+greenButton.grid(row =0, column = 1)
+redButton = Button(win, text = 'Red  LED Turn On', font = myFont, command = redToggle,bg = 'bisque2', height = 1, width = 22)
+redButton.grid(row =0, column = 3)
+yellowButton = Button(win, text = 'Yellow LED Turn On', font = myFont, command = yellowToggle,bg = 'bisque2', height = 1, width = 22)
+yellowButton.grid(row =0, column = 5)
+win.protocol("WM DELETE WINDOM", close) 
+win.mainloop()
